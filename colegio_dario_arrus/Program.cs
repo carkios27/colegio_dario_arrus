@@ -545,7 +545,9 @@ public static class Tramites
             {
                 if (Datos.Expedientes[j] < Datos.Expedientes[j + 1])
                 {
-                    (Datos.Expedientes[j], Datos.Expedientes[j + 1]) = (Datos.Expedientes[j + 1], Datos.Expedientes[j]);
+                    int expediente = Datos.Expedientes[j];
+                    Datos.Expedientes[j] = Datos.Expedientes[j + 1];
+                    Datos.Expedientes[j + 1] = expediente;
                     Intercambiar(Datos.Solicitantes, j);
                     Intercambiar(Datos.Dnis, j);
                     Intercambiar(Datos.Tipos, j);
@@ -630,7 +632,8 @@ public static class Archivos
             for (int i = 0; i < lineas.Length && Datos.Contador < Datos.Max; i++)
             {
                 string[] campos = lineas[i].Split('|');
-                if ((campos.Length != 12 && campos.Length != 13) || !int.TryParse(campos[0], out int exp))
+                int exp;
+                if ((campos.Length != 12 && campos.Length != 13) || !int.TryParse(campos[0], out exp))
                     continue; // línea dañada: se ignora
 
                 if (Usuarios.BuscarCuenta(campos[4]) == -1)
